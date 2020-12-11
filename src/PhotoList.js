@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 
 export default function PhotoList(){
     const [photos, setPhotoData] = useState({});
@@ -18,15 +19,39 @@ export default function PhotoList(){
              })
     }, [])
 
+        const DynamicContainer = styled.div`
+            display: flex;
+            justify-content: space-evenly;
 
-    return (
-        <div>
-            <h1>NASA Fun Fact of the Day!</h1>
-            <p>Today, {photos.date}, we have a {photos.media_type} to share with you!</p>
-            <h2>{photos.title}</h2>
-            <p>{photos.explanation}</p>
-            {photos.media_type ='video' ? <iframe width="560" height="315" src={photos.url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> : <img src={photos.url} alt="NASA photo of the day"/>}
-        </div>
-    )
+        `;
 
+        const TextContainer = styled.div`
+            width: 30%;
+
+        `;
+        const ImageContainer = styled.div`
+            width: 30%;
+            height: 400px;
+        `;
+        const NasaImage = styled.img`
+                width: 100%;
+                padding: 2%;
+
+        `;
+
+        return (
+            <div>
+                <h1>NASA Fun Fact of the Day!</h1>
+                <p>Today, {photos.date}, we have this {photos.media_type} to share with you!</p>
+                <DynamicContainer>
+                    <TextContainer>
+                        <h2>{photos.title}</h2>
+                        <p>{photos.explanation}</p>
+                    </TextContainer>
+                    <ImageContainer>
+                    {photos.media_type === 'video' ? <iframe width="560" height="315" src={photos.url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> : <NasaImage src={photos.url} alt="NASA photo of the day"/>}
+                    </ImageContainer>
+                </DynamicContainer>     
+            </div>
+        )
 }
